@@ -1,0 +1,27 @@
+bronze_layer:
+  file_path: "/Volumes/main/customer_churn/landing_zone/telco-customer-churn-missing.csv"
+  write_mode: "overwrite"
+  bronze_table_uc_nm: "main.customer_churn.churn_bronze"
+
+silver_layer:
+  bronze_table_uc_nm: "main.customer_churn.churn_bronze"
+  silver_table_uc_nm: "main.customer_churn.churn_silver"
+  write_mode: "overwrite"
+
+feature_engineering:
+  internet_cols: ["OnlineSecurity", "OnlineBackup", "DeviceProtection", "TechSupport","StreamingTV", "StreamingMovies"]
+  internet_values_map: {"Yes": 1, "No": 0, "No internet service": 0}
+  internet_services_cnt_nm: "Total_internet_services"
+  fill_missing_cols: ["tenure", "MonthlyCharges", "TotalCharges"]
+  id_cols: ["customerID", "transactions_ts"]
+  label_col: ["Churn"]
+  split_col: ["split"]
+
+training:
+  train_valid_test_rt: [0.80, 0.10, 0.10]
+  seed: 1991
+  features_table_nm: "main.customer_churn.churn_features"
+  labels_table_uc_nm: "main.customer_churn.churn_labels"
+
+
+
